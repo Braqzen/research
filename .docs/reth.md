@@ -8,35 +8,35 @@ The consensus layer deals with: block proposal, block gossip and attesting to bl
 
 ## Reth Workflow Overview
 
-### Initialization: Config files
+### Initialization
+
+#### Config files
 
 Reth's starts point is ingress of config data which customizes the execution client.
 
 There are many sections available for customization.
 
-#### Stages
+##### Stages
 
 The stages section concerns itself with content such as, but not limited to, syncing of blockchain data, maintaining state and updating the database.
 
 Reth utilizes a pipeline for processing stages. When one stage completes successfully the subsequent stage may begin.
 
-#### Peers
+##### Peers
 
 The peers section concerns itself with management of network connections such as limiting the number of peers, time between attempting reconnection and peer reputation scoring.
 
-#### Sessions
+##### Sessions
 
 The session section concerns itself with individual network sessions between peers and handles request timeouts and buffer sizes per peer.
 
-
-#### Pruning
+##### Pruning
 
 The pruning section concerns itself with data storage and enables specific segments to be pruned independently of the others. This includes receipts, storage and account histories, when to prune etc.
 
-### Initialization: Database
+#### Database
 
-### Initialization: Networking
-
+#### Networking
 
 
 ## Crates
