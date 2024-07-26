@@ -1,5 +1,7 @@
 # Reth - Execution Client for Ethereum
 
+NOTE: WIP. Content may be incorrect.
+
 To start an Ethereum node you need to run an execution client (such as Reth) and a consensus client (such as Lighthouse).
 
 The execution layer deals with: tx validation, tx gossip, block execution, state transitions and storage.
@@ -36,7 +38,35 @@ The pruning section concerns itself with data storage and enables specific segme
 
 #### Database
 
+TODO: Insufficient online content. Must read code to discover nuances / truth.
+
+After initializing the configuration settings the database is prepared. A new database will be created and/or connected to and its data is checked for integrity. Some data may be cached to improve performance.
+
 #### Networking
+
+Reth utilizes DevP2P to create its routing table of peers and manage connections. The process consists of node discovery followed by establishing individual peer connections.
+
+##### Node Discovery
+
+The node discovery process consists of locating and maintaining active nodes within its routing table.
+
+The protocol used is Discv4, built on UDP, which utilizes a distributed hash table (DHT), based on the Kademlia algorithm, to maintain peers based on their "distance" to the node. The distance is not geographical but instead derived between IDs and stored/grouped within "buckets".
+
+Each node has its own DHT with a set number of buckets rather than each node containing a global list of all nodes.
+
+1. Reth contains a list of known bootstrap nodes used to begin node discovery
+2. Reth sends a PING message to a node and waits for a PONG message response
+3. The PONG response is verified to come from the PING recipient
+4. Post verification Reth sends a FIND_NODE message with its ID to populate its routing table of peers
+5. The Kademlia algorithm is used to find the closest peers and a list of peers is sent back
+6. Reth will update its routing table and repeat step 2 via the new peers until the table is populated
+7. Periodically, Reth will PING its peers to prune/update its routing table
+
+Discv4 is currently in use until all execution clients support Discv5. Discv5 may be enabled through the use of a flag and it will run simultaneously along Discv4.
+
+##### Connecting to peers
+
+// Reth will form connections with peers using RLPx (TCP) and establish common sub-protocols for communication
 
 
 ## Crates
