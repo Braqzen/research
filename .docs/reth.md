@@ -38,9 +38,26 @@ The pruning section concerns itself with data storage and enables specific segme
 
 #### Database
 
-TODO: Insufficient online content. Must read code to discover nuances / truth.
+Upon initialization Reth checks for the existence of its database, and if it's not found, a new database of predefined `tables` is created.
 
-After initializing the configuration settings the database is prepared. A new database will be created and/or connected to and its data is checked for integrity. Some data may be cached to improve performance.
+The database in Reth consists of two layers:
+
+- **Database Layer**: `MDBX`
+- **Abstract Layer**: Sits on top of the database
+
+##### Database Layer
+
+`MDBX` is an extremely fast, compact, and transactional key-value database that guarantees data integrity and performance through its adherence to ACID properties.
+
+##### Abstract Layer
+
+The abstract layer standardizes database interactions by defining an interface to interact with the database and a schema for storing data. The schema can be thought of as a collection of `tables` with `keys` and `values`, where both keys and values may be complex data structures that are encoded and decoded.
+
+There are many `tables` because each `table` focuses on one type of data, such as `transactions`, `headers`, `receipts` etc.
+
+##### Design Benefits
+
+This design, coupled with the properties of `MDBX`, provides Reth with flexibility and high performance when handling data.
 
 #### Networking
 
@@ -84,5 +101,7 @@ The sub-protocols are
 2. `Light Ethereum Sub-protocol (LES)`: Used by light clients to verify state
 3. `Whisper`: P2P encrypted messaging used for privacy and anonymity
 4. `Swarm`: Distributed storage / content sharing
+
+### Synchronization
 
 ## Crates
