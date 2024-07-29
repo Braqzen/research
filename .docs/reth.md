@@ -101,7 +101,29 @@ The sub-protocols are
 2. `Light Ethereum Sub-protocol (LES)`: Used by light clients to verify state
 3. `Whisper`: P2P encrypted messaging used for privacy and anonymity
 4. `Swarm`: Distributed storage / content sharing
+5. `Snap`:
+6. `Witness (WIT)`:
 
 ### Synchronization
+
+Synchronization in Reth can be split into two parts
+
+- Initial Sync
+- Real-Time Sync
+
+#### Initial Sync
+
+When Reth comes online it must catch up to the head of the blockchain. It accomplishes this by requesting data from randomly selected peers.
+
+The synchronization process utilizes a `pipeline` mechanism, which processes `stages` sequentially. If a `stage` is executed successfully, the subsequent `stage` is executed. Otherwise, any changes are unwound.
+
+The `stages` include, but are not limited to:
+
+- `Headers`: To avoid a "long-range attack", headers are requested in batches from the tip of the chain in descending order to the latest block in its database. Each header is validated and then stored.
+- `Body`: Using the downloaded headers, Reth determines which block bodies to download. It pre-validate them by checking the ommers hash and transaction root against the block body, followed by adding each transaction from the block to its database.
+- `SenderRecovery`: The transaction signer is recovered and stored for each transaction.
+- `Execution`: The transactions from each block are executed, and state changes (such as updates to balances, bytecode, etc.) are applied.
+
+#### Real-Time Sync 
 
 ## Crates
