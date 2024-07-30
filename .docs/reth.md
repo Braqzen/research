@@ -1,6 +1,7 @@
+<!-- omit from toc -->
 # Reth - Execution Client for Ethereum
 
-NOTE: WIP. Content may be incorrect.
+> NOTE: WIP. Content may be incorrect.
 
 An Ethereum node consists of two layers:
 
@@ -11,7 +12,33 @@ The execution client deals with transactions (validation, gossip), block executi
 
 The consensus client deals with blocks (proposal, gossip, attesting to block validity), and tracking state and performance of validators.
 
-## Reth Overview
+**TABLE OF CONTENTS**
+
+- [Overview](#overview)
+  - [Initialization](#initialization)
+    - [Config files](#config-files)
+      - [Stages](#stages)
+      - [Peers](#peers)
+      - [Sessions](#sessions)
+      - [Pruning](#pruning)
+    - [Database](#database)
+      - [Database Layer](#database-layer)
+      - [Abstract Layer](#abstract-layer)
+      - [Design Benefits](#design-benefits)
+    - [Networking](#networking)
+      - [Node Discovery](#node-discovery)
+      - [Session Management](#session-management)
+  - [Synchronization](#synchronization)
+    - [Initial Sync](#initial-sync)
+    - [Real-Time Sync](#real-time-sync)
+      - [Transaction Management](#transaction-management)
+        - [Validation, Mempool Inclusion and Transaction Gossip](#validation-mempool-inclusion-and-transaction-gossip)
+        - [Block Creation](#block-creation)
+      - [Block Management](#block-management)
+- [Crates](#crates)
+
+
+## Overview
 
 ### Initialization
 
