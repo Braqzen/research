@@ -2,11 +2,14 @@
 
 NOTE: WIP. Content may be incorrect.
 
-To start an Ethereum node you need to run an execution client (such as Reth) and a consensus client (such as Lighthouse).
+An Ethereum node consists of two layers:
 
-The execution layer deals with: tx validation, tx gossip, block execution, state transitions and storage.
+- An execution client (such as Reth)
+- A consensus client (such as Lighthouse)
 
-The consensus layer deals with: block proposal, block gossip and attesting to block validity, tracking state and performance of validators.
+The execution client deals with transactions (validation, gossip), block execution and state transitions, and storage.
+
+The consensus client deals with blocks (proposal, gossip, attesting to block validity), and tracking state and performance of validators.
 
 ## Reth Overview
 
@@ -81,7 +84,7 @@ Each node has its own `DHT` with a set number of buckets rather than each node c
 
 `Discv4` is currently in use until all execution clients support `Discv5`. `Discv5` may be enabled through the use of a flag and it will run simultaneously along `Discv4`.
 
-##### Connecting to peers
+##### Session Management
 
 After peers have added each other to their routing tables a connection may be established.
 
@@ -101,12 +104,14 @@ The sub-protocols are
 2. `Light Ethereum Sub-protocol (LES)`: Used by light clients to verify state
 3. `Whisper`: P2P encrypted messaging used for privacy and anonymity
 4. `Swarm`: Distributed storage / content sharing
-5. `Snap`:
-6. `Witness (WIT)`:
+5. `Snap`: TODO
+6. `Witness (WIT)`: TODO
+
+> NOTE: Reth may not support all of these and some of these may be deprecated.
 
 ### Synchronization
 
-Synchronization in Reth can be split into two parts
+Synchronization in Reth can be split into two sections
 
 - Initial Sync
 - Real-Time Sync
@@ -125,5 +130,40 @@ The `stages` include, but are not limited to:
 - `Execution`: The transactions from each block are executed, and state changes (such as updates to balances, bytecode, etc.) are applied.
 
 #### Real-Time Sync 
+
+After completing the initial synchronization with the blockchain, Reth performs two tasks to stay updated with the latest state of the network:
+
+- Transaction Management
+- Block Management
+
+##### Transaction Management
+
+###### Validation, Mempool Inclusion and Transaction Gossip
+
+1. Reth exposes a `RPC` for users and peers to submit transactions
+2. When a new transaction is received Reth performs basic validation such as checking the nonce, gas limit, signature verification etc. 
+3. If the transaction passes validation, it is added to its mempool
+4. The validated transaction is then broadcast to its peers
+
+###### Block Creation
+
+1. Reth also provides another `RPC` for consensus clients to retrieve neccessary data for block creation
+2. When a consensus client requests transactions for a new block, Reth selects transactions from its mempool based on a specific ruleset, often prioritizing those with the highest gas price
+3. Along with the selected transactions, Reth supplies additional data required for block creation, including the block header, state root, transaction root, and receipt root
+
+##### Block Management
+
+There are two scenarios in which Reth receives a block from the consensus client:
+
+- Reth's block has reached consensus
+- The network has produced a new block
+
+In both cases the consensus client sends the block back to Reth for execution and storage.
+
+1. Reth performs block validation to adhere to protocol rules
+2. Reth executes pre-confs and prepares state for transaction execution in Revm
+3. Revm executes transactions sequentially while applying state changes
+4. Revm returns the outcome of its execution to Reth
+5. Reth finalizes the state changes and updates its database
 
 ## Crates
