@@ -17,15 +17,13 @@ The consensus client deals with blocks (proposal, gossip, attesting to block val
 
 #### Config files
 
-Reth's starts point is ingress of config data which customizes the execution client.
+Reth's start point is ingress of config data which customizes the execution client.
 
 There are many sections available for customization.
 
 ##### Stages
 
 The stages section concerns itself with content such as, but not limited to, syncing of blockchain data, maintaining state and updating the database.
-
-Reth utilizes a pipeline for processing stages. When one stage completes successfully the subsequent stage may begin.
 
 ##### Peers
 
