@@ -1,7 +1,7 @@
 <!-- omit from toc -->
 # Reth - Execution Client for Ethereum
 
-> NOTE: WIP. Content may be incorrect.
+> NOTE: Content may have mistakes.
 
 An Ethereum node consists of two layers:
 
@@ -17,10 +17,6 @@ The consensus client deals with blocks (proposal, gossip, attesting to block val
 - [Overview](#overview)
   - [Initialization](#initialization)
     - [Config files](#config-files)
-      - [Stages](#stages)
-      - [Peers](#peers)
-      - [Sessions](#sessions)
-      - [Pruning](#pruning)
     - [Database](#database)
       - [Database Layer](#database-layer)
       - [Abstract Layer](#abstract-layer)
@@ -35,6 +31,7 @@ The consensus client deals with blocks (proposal, gossip, attesting to block val
         - [Validation, Mempool Inclusion and Transaction Gossip](#validation-mempool-inclusion-and-transaction-gossip)
         - [Block Creation](#block-creation)
       - [Block Management](#block-management)
+- [Execution Extensions (ExEx)](#execution-extensions-exex)
 - [Crates](#crates)
 
 
@@ -48,21 +45,10 @@ Reth's start point is ingress of config data which customizes the execution clie
 
 There are many sections available for customization.
 
-##### Stages
-
-The stages section concerns itself with content such as, but not limited to, syncing of blockchain data, maintaining state and updating the database.
-
-##### Peers
-
-The peers section concerns itself with management of network connections such as limiting the number of peers, time between attempting reconnection and peer reputation scoring.
-
-##### Sessions
-
-The session section concerns itself with individual network sessions between peers and handles request timeouts and buffer sizes per peer.
-
-##### Pruning
-
-The pruning section concerns itself with data storage and enables specific segments to be pruned independently of the others. This includes receipts, storage and account histories, when to prune etc.
+- `Stages`: Configures syncing of blockchain data, maintaining state, updating the database etc.
+- `Peers`: Configures management of network connections such as limiting the number of peers, time between attempting reconnection and peer reputation scoring.
+- `Sessions`: Configures individual network sessions between peers and handles request timeouts and buffer sizes per peer.
+- `Prunning`: Configures data storage and enables specific segments to be pruned independently of the others. This includes receipts, storage and account histories, when to prune etc.
 
 #### Database
 
@@ -70,8 +56,8 @@ Upon initialization Reth checks for the existence of its database, and if it's n
 
 The database in Reth consists of two layers:
 
-- **Database Layer**: `MDBX`
-- **Abstract Layer**: Sits on top of the database
+- [**Database Layer**](#database-layer): `MDBX`
+- [**Abstract Layer**](#abstract-layer): Sits on top of the database
 
 ##### Database Layer
 
@@ -138,8 +124,8 @@ The sub-protocols are
 
 Synchronization in Reth can be split into two sections
 
-- Initial Sync
-- Real-Time Sync
+- [Initial Sync](#initial-sync)
+- [Real-Time Sync](#real-time-sync)
 
 #### Initial Sync
 
@@ -158,8 +144,8 @@ The `stages` include, but are not limited to:
 
 After completing the initial synchronization with the blockchain, Reth performs two tasks to stay updated with the latest state of the network:
 
-- Transaction Management
-- Block Management
+- [Transaction Management](#transaction-management)
+- [Block Management](#block-management)
 
 ##### Transaction Management
 
@@ -190,5 +176,7 @@ In both cases the consensus client sends the block back to Reth for execution an
 3. Revm executes transactions sequentially while applying state changes
 4. Revm returns the outcome of its execution to Reth
 5. Reth finalizes the state changes and updates its database
+
+## Execution Extensions (ExEx)
 
 ## Crates
