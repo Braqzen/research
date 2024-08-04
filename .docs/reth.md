@@ -201,7 +201,7 @@ Upon processing an event the ExEx must send an event back to Reth to indicate th
 
 #### Design Benefits
 
-The benefits include of using ExExs include:
+The benefits of using ExExs include:
 
 - Immediate processing of blockchain data
 - Scaling infrastructure without altering the core functionality of Reth
