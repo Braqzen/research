@@ -32,9 +32,9 @@ The consensus client deals with blocks (proposal, gossip, attesting to block val
         - [Block Creation](#block-creation)
       - [Block Management](#block-management)
 - [Execution Extensions (ExEx)](#execution-extensions-exex)
-  - [Reth-ExEx Notification System](#reth-exex-notification-system)
+  - [Notification System](#notification-system)
     - [Design Benefits](#design-benefits-1)
-  - [Reth-ExEx Implementation](#reth-exex-implementation)
+  - [Implementation](#implementation)
     - [ExEx](#exex)
     - [ExExManager](#exexmanager)
 - [Crates](#crates)
@@ -188,7 +188,7 @@ Paradigm provides a definition of ExExs in their [blog](https://www.paradigm.xyz
 
 > Post-execution hooks for building real-time, high performance and zero-operations off-chain infrastructure on top of Reth.
 
-### Reth-ExEx Notification System
+### Notification System
 
 As Reth's state changes, notifications are emitted which the ExEx may use to derive its state and functionality.
 
@@ -206,7 +206,7 @@ The benefits include of using ExExs include:
 - Immediate processing of blockchain data
 - Scaling infrastructure without altering the core functionality of Reth
 
-### Reth-ExEx Implementation
+### Implementation
 
 #### ExEx
 
