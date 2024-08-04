@@ -32,6 +32,11 @@ The consensus client deals with blocks (proposal, gossip, attesting to block val
         - [Block Creation](#block-creation)
       - [Block Management](#block-management)
 - [Execution Extensions (ExEx)](#execution-extensions-exex)
+  - [Reth-ExEx Notification System](#reth-exex-notification-system)
+    - [Design Benefits](#design-benefits-1)
+  - [Reth-ExEx Implementation](#reth-exex-implementation)
+    - [ExEx](#exex)
+    - [ExExManager](#exexmanager)
 - [Crates](#crates)
 
 
@@ -178,5 +183,38 @@ In both cases the consensus client sends the block back to Reth for execution an
 5. Reth finalizes the state changes and updates its database
 
 ## Execution Extensions (ExEx)
+
+Paradigm provides a definition of ExExs in their [blog](https://www.paradigm.xyz/2024/05/reth-exex) as:
+
+> Post-execution hooks for building real-time, high performance and zero-operations off-chain infrastructure on top of Reth.
+
+### Reth-ExEx Notification System
+
+As Reth's state changes, notifications are emitted which the ExEx may use to derive its state and functionality.
+
+Notification examples include:
+
+- **Chain operations**: Notifications about whether a commit, revert or reorg has occured
+- **Blocks**: Information about their transactions, receipts and state changes 
+
+Upon processing an event the ExEx must send an event back to Reth to indicate that it has finished processing the event and it's safe to prune the associated data.
+
+#### Design Benefits
+
+The benefits include of using ExExs include:
+
+- Immediate processing of blockchain data
+- Scaling infrastructure without altering the core functionality of Reth
+
+### Reth-ExEx Implementation
+
+#### ExEx
+
+<!-- ExEx is a `Future` compiled into Reth, not a separate process -->
+<!-- Eventually turn them into dynamically loaded plugins -->
+
+#### ExExManager
+
+<!-- ExExManager receives events from node and sends them to each ExEx, then back from ExEx to Reth -->
 
 ## Crates
