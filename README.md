@@ -2,6 +2,8 @@
 
 Exploring projects of interest to understand their inner workings
 
+> NOTE: Content may have mistakes.
+
 ## Content
 
 **Node**
@@ -25,3 +27,7 @@ Exploring projects of interest to understand their inner workings
 
 - [rbuilder](./.docs/revm.md): Ethereum MEV-Boost block builder (Rust)
 - [artemis](./.docs/artemis.md): Framework for writing MEV bots (Rust)
+
+**Operating System**
+
+- [NixOS](./.docs/nixos.md): Declarative, reproducible Linux distribution built around the Nix package manager
