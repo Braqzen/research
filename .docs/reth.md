@@ -1,8 +1,6 @@
 <!-- omit from toc -->
 # Reth - Execution Client for Ethereum
 
-> NOTE: Content may have mistakes.
-
 An Ethereum node consists of two layers:
 
 - An execution client (such as Reth)
