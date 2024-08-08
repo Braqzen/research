@@ -175,7 +175,7 @@ There are two scenarios in which Reth receives a block from the consensus client
 In both cases the consensus client sends the block back to Reth for execution and storage.
 
 1. Reth performs block validation to adhere to protocol rules
-2. Reth executes pre-confs and prepares state for transaction execution in Revm
+2. Reth prepares state for transaction execution in Revm
 3. Revm executes transactions sequentially while applying state changes
 4. Revm returns the outcome of its execution to Reth
 5. Reth finalizes the state changes and updates its database
